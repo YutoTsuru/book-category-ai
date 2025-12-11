@@ -3,13 +3,58 @@
 書籍のタイトルや説明文からジャンルを自動分類するAIアプリケーションです。
 Python + scikit-learn + Streamlit を使用しています。
 
+## プロジェクト概要
+本アプリは Web 上で提供されている **書籍情報（タイトル・著者・出版社・説明文）** を入力すると、  
+AI が *「漫画/ラノベ」「ビジネス」「参考書」「文学」などのジャンルを予測* します。
+
+特徴：
+
+- 日本語書籍に最適化したテキスト前処理  
+- SentenceTransformer を使った埋め込み生成  
+- KMeans によるジャンルクラスタリング  
+- Streamlit で UI を簡単操作  
+- 学習モデルはローカルに保存し、高速推論可能
+
+---
 ## ディレクトリ構成
-- `data/` : 書籍データ (CSV, 100件以上)
-- `models/` : 学習済みモデル、ラベルエンコーダ
-- `reports/` : グラフや評価レポート
-- `notebooks/` : データ分析用ノートブック
-- `train.py` : 学習・評価・グラフ出力
-- `app.py` : デモアプリ (Streamlit)
+book-category-ai/
+├── app.py # Streamlit 推論アプリ
+├── re.train.py # モデル再学習スクリプト
+├── requirements.txt # 必要ライブラリ一覧
+├── README.md
+│
+├── data/
+│ └── clean_details.csv # 書籍データ（前処理済み）
+│
+├── models/ # 学習済みモデル郡
+│ ├── kmeans.pkl
+│ ├── label_map.pkl
+│ ├── label_encoder.joblib
+│ ├── tfidf_corpus.npz
+│ └── corpus_meta.joblib
+│
+└── .gitignore # Git 管理除外設定
+
+
+---
+
+## 🧠 使用している技術
+
+| 技術 | 内容 |
+|------|------|
+| **Python 3.12** | メイン言語 |
+| **sentence-transformers (E5-small)** | 日本語対応の軽量embeddingモデル |
+| **scikit-learn** | KMeansクラスタリング・前処理 |
+| **joblib / numpy** | モデル保存 |
+| **Streamlit** | 推論用Web UI |
+
+---
+
+## 🔧 インストール & 実行方法
+
+### ① 仮想環境の作成
+```bash
+python -m venv .venv
 
 ## 実行手順
 ```bash
