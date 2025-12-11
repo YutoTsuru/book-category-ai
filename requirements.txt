@@ -5,3 +5,5 @@ matplotlib
 streamlit
 scipy
 joblib
+sentence-transformers
+torch==2.2.0
