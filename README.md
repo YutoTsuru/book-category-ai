@@ -54,13 +54,13 @@ book-category-ai/<br>
 
 ### ① 仮想環境の作成
 ```bash
-python -m venv .venv<br>
+python -m venv .venv
 
 ## 実行手順
-```bash<br>
-python -m venv .venv<br>
-source .venv/bin/activate   # Windowsは .venv\Scripts\activate<br>
-pip install -r requirements.txt<br>
-python train.py<br>
-streamlit run app.py<br>
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windowsは .venv\Scripts\activate
+pip install -r requirements.txt
+python train.py
+streamlit run app.py
 ```
