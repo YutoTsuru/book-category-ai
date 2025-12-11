@@ -17,36 +17,36 @@ AI が *「漫画/ラノベ」「ビジネス」「参考書」「文学」な�
 
 ---
 ## ディレクトリ構成
-book-category-ai/
-├── app.py # Streamlit 推論アプリ
-├── re.train.py # モデル再学習スクリプト
-├── requirements.txt # 必要ライブラリ一覧
-├── README.md
-│
-├── data/
-│ └── clean_details.csv # 書籍データ（前処理済み）
-│
-├── models/ # 学習済みモデル郡
-│ ├── kmeans.pkl
-│ ├── label_map.pkl
-│ ├── label_encoder.joblib
-│ ├── tfidf_corpus.npz
-│ └── corpus_meta.joblib
-│
-└── .gitignore # Git 管理除外設定
+book-category-ai/<br>
+├── app.py # Streamlit 推論アプリ<br>
+├── re.train.py # モデル再学習スクリプト<br>
+├── requirements.txt # 必要ライブラリ一覧<br>
+├── README.md<br>
+│<br>
+├── data/<br>
+│ └── clean_details.csv # 書籍データ<br>
+│<br>
+├── models/ # 学習済みモデル郡<br>
+│ ├── kmeans.pkl<br>
+│ ├── label_map.pkl<br>
+│ ├── label_encoder.joblib<br>
+│ ├── tfidf_corpus.npz<br>
+│ └── corpus_meta.joblib<br>
+│<br>
+└── .gitignore # Git 管理除外設定<br>
 
 
 ---
 
 ##  使用している技術
 
-| 技術 | 内容 |
-|------|------|
-| **Python 3.12** | メイン言語 |
-| **sentence-transformers (E5-small)** | 日本語対応の軽量embeddingモデル |
-| **scikit-learn** | KMeansクラスタリング・前処理 |
-| **joblib / numpy** | モデル保存 |
-| **Streamlit** | 推論用Web UI |
+| 技術 | 内容 |<br>
+|------|------|<br>
+| **Python 3.12** | メイン言語 |<br>
+| **sentence-transformers (E5-small)** | 日本語対応の軽量embeddingモデル |<br>
+| **scikit-learn** | KMeansクラスタリング・前処理 |<br>
+| **joblib / numpy** | モデル保存 |<br>
+| **Streamlit** | 推論用Web UI |<br>
 
 ---
 
