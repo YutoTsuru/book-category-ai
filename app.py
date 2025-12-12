@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_URL = "https://web-production-f66ba.up.railway.app/predict"
+API_URL = "https://book-category-api.onrender.com/predict"
 
 cluster_label_map = {
     0: "漫画・ライトノベル",
@@ -25,7 +25,7 @@ st.markdown(
 )
 
 title = st.text_input("タイトル")
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1, 1])
 
 with col1:
     author = st.text_input("著者")
@@ -44,11 +44,9 @@ if st.button("分類する"):
     else:
         data = response.json()
         st.write(data)
-        pred = data.get("prediction")
+        pred = data.get("cluster")
 
-        try:
-            pred = int(pred)
-        except:
+        if not isinstance(pred, int):
             pred = None
 
         genre = cluster_label_map.get(pred, "不明")
