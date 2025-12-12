@@ -1,30 +1,19 @@
 import streamlit as st
-import pickle
-from sentence_transformers import SentenceTransformer
-import numpy as np
+import requests
 
-# ====== モデル読み込み ======
-with open("models/kmeans.pkl", "rb") as f:
-    kmeans = pickle.load(f)
+API_URL = "https://web-production-f66ba.up.railway.app/predict"
 
-with open("models/label_map.pkl", "rb") as f:
-    label_map = pickle.load(f)
-
-model = SentenceTransformer("intfloat/multilingual-e5-small")
-
-# ====== UI セットアップ ======
 st.set_page_config(page_title="書籍ジャンル分類AI", layout="centered")
 
 st.markdown(
     """
     <h1 style='text-align:center; font-size:42px;'>
-        📚 書籍ジャンル分類AI
+        書籍ジャンル分類AI
     </h1>
     """,
     unsafe_allow_html=True
 )
 
-# ---- 入力フォーム ----
 title = st.text_input("タイトル")
 col1, col2 = st.columns(2)
 
@@ -35,39 +24,36 @@ with col2:
 
 desc = st.text_area("説明文", height=200)
 
-# ====== 分類処理 ======
 if st.button("分類する"):
-
-    # 入力チェック
     text = " ".join([title, author, publisher, desc]).strip()
 
     if not text:
         st.warning("何か入力してね！")
         st.stop()
 
-    # sentence-transformers で埋め込み生成
-    emb = model.encode([text], convert_to_numpy=True, normalize_embeddings=True)
+    try:
+        response = requests.post(API_URL, json={"text": text}, timeout=10)
+        response.raise_for_status()
+        result = response.json()
+        genre = result["label"]
 
-    # KMeans クラスタ番号
-    cluster_id = int(kmeans.predict(emb)[0])
+        st.markdown(
+            f"""
+            <div style="
+                background:#1f2937;
+                color:white;
+                padding:20px;
+                border-radius:12px;
+                text-align:center;
+                font-size:28px;
+                margin-top:30px;
+            ">
+                推定ジャンル：<b>{genre}</b>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    # クラスタ → ラベル名
-    genre = label_map.get(cluster_id, "不明")
-
-    # ====== 結果表示 ======
-    st.markdown(
-        f"""
-        <div style="
-            background:#1f2937;
-            color:white;
-            padding:20px;
-            border-radius:12px;
-            text-align:center;
-            font-size:28px;
-            margin-top:30px;
-        ">
-            🎯 推定ジャンル：<b>{genre}</b>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    except Exception as e:
+        st.error("APIとの通信に失敗しました")
+        st.code(str(e))
